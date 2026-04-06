@@ -142,18 +142,26 @@ export default function Login() {
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
   const handleSubmit = async e => {
-    e.preventDefault()
-    setErreur('')
-    setLoading(true)
-    await new Promise(r => setTimeout(r, 800))
-    if (form.email === 'etudiant@test.com' && form.password === '1234') {
-      login({ nom:'Ahmed Diallo', email:form.email, role:'etudiant' }, 'mock-token-123')
-      navigate('/dashboard')
-    } else {
-      setErreur('Email ou mot de passe incorrect')
-      setLoading(false)
-    }
+  e.preventDefault()
+  setErreur('')
+  setLoading(true)
+  await new Promise(r => setTimeout(r, 800))
+
+  // Mock étudiant
+  if (form.email === 'etudiant@test.com' && form.password === '1234') {
+    login({ nom:'Ahmed Diallo', email:form.email, role:'etudiant' }, 'mock-token-123')
+    navigate('/dashboard')
   }
+  // Mock enseignant
+  else if (form.email === 'enseignant@test.com' && form.password === '1234') {
+    login({ nom:'Dr. Kofi Mensah', email:form.email, role:'enseignant' }, 'mock-token-456')
+    navigate('/enseignant')
+  }
+  else {
+    setErreur('Email ou mot de passe incorrect')
+    setLoading(false)
+  }
+}
 
   return (
     <div style={{
